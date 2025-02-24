@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .converter {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result, .error {
+            margin-top: 10px;
+            color: #333;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="converter">
+        <h2>Temperature Converter</h2>
+        <input type="text" id="temperature" placeholder="Enter temperature">
+        <select id="unit">
+            <option value="C">Celsius to Fahrenheit</option>
+            <option value="F">Fahrenheit to Celsius</option>
+        </select>
+        <button id="convertButton">Convert</button>
+        <div class="result" id="result"></div>
+        <div class="error" id="error"></div>
+    </div>
+
+    <script>
+        // Function to convert Celsius to Fahrenheit
+        function celsiusToFahrenheit(celsius) {
+            return (celsius * 9/5) + 32;
+        }
+
+        // Function to convert Fahrenheit to Celsius
+        function fahrenheitToCelsius(fahrenheit) {
+            return (fahrenheit - 32) * 5/9;
+        }
+
+        // Function to handle the conversion process
+        function convertTemperature() {
+            const temperatureInput = document.getElementById('temperature').value;
+            const unit = document.getElementById('unit').value;
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+
+            // Clear previous output
+            resultDiv.innerHTML = '';
+            errorDiv.innerHTML = '';
+
+            // Validate that input is numeric
+            if (isNaN(temperatureInput) || temperatureInput.trim() === "") {
+                errorDiv.innerHTML = 'Please enter a valid number.';
+                return;
+            }
+
+            // Convert temperature based on unit selection
+            let result;
+            if (unit === 'C') {
+                // Celsius to Fahrenheit
+                const celsius = parseFloat(temperatureInput);
+                result = celsiusToFahrenheit(celsius);
+                resultDiv.innerHTML = `${celsius} °C is equal to ${result.toFixed(2)} °F`;
+            } else {
+                // Fahrenheit to Celsius
+                const fahrenheit = parseFloat(temperatureInput);
+                result = fahrenheitToCelsius(fahrenheit);
+                resultDiv.innerHTML = `${fahrenheit} °F is equal to ${result.toFixed(2)} °C`;
+            }
+        }
+
+        // Attach event listener to the Convert button
+        document.getElementById('convertButton').addEventListener('click', convertTemperature);
+    </script>
+</body>
+</html>
